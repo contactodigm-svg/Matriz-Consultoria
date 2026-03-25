@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matriz Consultores SuccessFactors</title>
+<style>
+  :root {
+    --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-200:#85B7EB;--blue-400:#378ADD;--blue-600:#185FA5;--blue-800:#0C447C;--blue-900:#042C53;
+    --teal-50:#E1F5EE;--teal-100:#9FE1CB;--teal-200:#5DCAA5;--teal-400:#1D9E75;--teal-600:#0F6E56;--teal-800:#085041;
+    --gray-50:#F1EFE8;--gray-100:#D3D1C7;--gray-200:#B4B2A9;--gray-400:#888780;--gray-600:#5F5E5A;--gray-800:#444441;
+    --amber-50:#FAEEDA;--amber-100:#FAC775;--amber-400:#BA7517;--amber-600:#854F0B;--amber-800:#633806;
+    --coral-50:#FAECE7;--coral-100:#F5C4B3;--coral-400:#D85A30;--coral-600:#993C1D;
+    --purple-50:#EEEDFE;--purple-100:#CECBF6;--purple-400:#7F77DD;--purple-600:#534AB7;--purple-800:#3C3489;
+    --green-50:#EAF3DE;--green-100:#C0DD97;--green-400:#639922;--green-600:#3B6D11;
+    --bg:#ffffff;--bg2:#F7F6F2;--text:#1a1a18;--text2:#5F5E5A;--text3:#888780;
+    --border:#e0ddd4;--border2:#ccc9be;
+    --radius:10px;--radius-sm:6px;
+    --font:'Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#1e1e1c;--bg2:#2a2a28;--text:#e8e6df;--text2:#b4b2a9;--text3:#888780;--border:#3a3a38;--border2:#4a4a48;}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
+
+  /* ─── Header ─── */
+  .app-header{padding:20px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .header-left h1{font-size:20px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
+  .header-left p{font-size:13px;color:var(--text2);margin-top:2px}
+  .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+  /* ─── Buttons ─── */
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--border2);background:var(--bg);color:var(--text);transition:background .15s,border-color .15s}
+  .btn:hover{background:var(--bg2);border-color:var(--blue-400)}
+  .btn-primary{background:var(--blue-600);color:#fff;border-color:var(--blue-600)}
+  .btn-primary:hover{background:var(--blue-800);border-color:var(--blue-800)}
+  .btn-danger{background:var(--coral-400);color:#fff;border-color:var(--coral-400)}
+  .btn-danger:hover{background:var(--coral-600);border-color:var(--coral-600)}
+  .btn svg{flex-shrink:0}
+
+  /* ─── Stats bar ─── */
+  .stats-bar{display:flex;gap:10px;padding:14px 24px 0;flex-wrap:wrap}
+  .stat-pill{background:var(--bg2);border:0.5px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
+  .stat-pill strong{color:var(--text);font-weight:600}
+
+  /* ─── Toolbar ─── */
+  .toolbar{display:flex;align-items:center;gap:10px;padding:14px 24px 0;flex-wrap:wrap}
+  .toolbar label{font-size:13px;color:var(--text2);white-space:nowrap}
+  .toolbar input,.toolbar select{padding:6px 10px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font)}
+  .toolbar input{width:200px}
+  .toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.15)}
+
+  /* ─── Matrix wrapper ─── */
+  .matrix-wrapper{padding:20px 24px 32px;overflow-x:auto}
+  .matrix-table{border-collapse:separate;border-spacing:4px;min-width:max-content}
+
+  /* ─── Cells ─── */
+  .cell-corner{width:130px;min-width:130px}
+  .cell-module-header{
+    background:var(--blue-600);color:#fff;
+    text-align:center;padding:10px 6px;
+    border-radius:var(--radius-sm);
+    font-size:12px;font-weight:600;letter-spacing:.2px;
+    min-width:110px;max-width:130px;width:120px;
+    line-height:1.3
+  }
+  .cell-client-header{
+    background:var(--bg2);border:0.5px solid var(--border);
+    padding:8px 12px;border-radius:var(--radius-sm);
+    font-size:12px;font-weight:600;color:var(--text);
+    text-align:right;white-space:nowrap;
+    width:130px;min-width:130px
+  }
+  .cell-data{
+    background:var(--bg);border:0.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    width:120px;min-width:110px;max-width:130px;
+    height:90px;vertical-align:top;
+    position:relative;overflow:hidden;
+    transition:border-color .15s,box-shadow .15s
+  }
+  .cell-data:hover{border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.12)}
+  .cell-data.filled{background:var(--teal-50);border-color:var(--teal-200)}
+  @media (prefers-color-scheme:dark){
+    .cell-data.filled{background:rgba(29,158,117,.12);border-color:var(--teal-600)}
+  }
+
+  /* ─── Consultant card inside cell ─── */
+  .consultant-card{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:6px 4px;gap:4px;text-align:center;cursor:pointer}
+  .consultant-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--teal-200);background:var(--teal-50);flex-shrink:0}
+  .consultant-initials{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--blue-800);background:var(--blue-100);border:2px solid var(--blue-200);flex-shrink:0}
+  .consultant-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.2;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .consultant-role{font-size:10px;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cell-empty{display:flex;align-items:center;justify-content:center;height:100%;cursor:pointer;opacity:.4;transition:opacity .15s}
+  .cell-empty:hover{opacity:.8}
+  .cell-empty svg{color:var(--text3)}
+  .cell-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:var(--coral-400);color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:10px;line-height:1;font-weight:700;z-index:2}
+  .cell-data:hover .cell-remove{display:flex}
+
+  /* ─── Upload zone ─── */
+  .upload-section{margin:0 24px;padding:20px;border:1.5px dashed var(--border2);border-radius:var(--radius);background:var(--bg2);text-align:center;display:none}
+  .upload-section.visible{display:block}
+  .upload-section h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .upload-section p{font-size:12px;color:var(--text2);margin-bottom:14px}
+  #csv-file-input{display:none}
+  .upload-label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:9px 18px;background:var(--blue-600);color:#fff;border-radius:var(--radius-sm);font-size:13px;font-weight:500;transition:background .15s}
+  .upload-label:hover{background:var(--blue-800)}
+  .upload-note{font-size:11px;color:var(--text3);margin-top:12px}
+  .download-template{color:var(--blue-600);cursor:pointer;text-decoration:underline;font-size:12px;margin-top:6px;display:inline-block}
+  .download-template:hover{color:var(--blue-800)}
+
+  /* ─── Modal ─── */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+  .modal-backdrop.open{display:flex}
+  .modal{background:var(--bg);border-radius:var(--radius);border:0.5px solid var(--border);padding:24px;width:100%;max-width:420px;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+  .modal h2{font-size:16px;font-weight:600;margin-bottom:4px}
+  .modal .modal-sub{font-size:12px;color:var(--text2);margin-bottom:18px}
+  .modal label{display:block;font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500}
+  .modal input,.modal select{width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);margin-bottom:14px}
+  .modal input:focus,.modal select:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.15)}
+  .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+  .avatar-preview-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  #avatar-preview{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:var(--blue-800)}
+  .file-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;color:var(--text2)}
+  .file-btn:hover{border-color:var(--blue-400);color:var(--text)}
+  #photo-input{display:none}
+
+  /* ─── Toast ─── */
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--teal-600);color:#fff;padding:10px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;z-index:200;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
+  .toast.show{opacity:1;transform:translateY(0)}
+
+  /* ─── Legend ─── */
+  .legend{display:flex;gap:16px;padding:0 24px 16px;flex-wrap:wrap;align-items:center}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+  .legend-dot{width:12px;height:12px;border-radius:3px}
+
+  /* ─── Empty state ─── */
+  .empty-state{text-align:center;padding:48px 24px;color:var(--text2)}
+  .empty-state svg{opacity:.3;margin-bottom:12px}
+  .empty-state h3{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px}
+  .empty-state p{font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="app-header">
+  <div class="header-left">
+    <h1>Matriz de Consultores — SuccessFactors</h1>
+    <p>Visualización de participación por cliente y módulo</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn" onclick="toggleUpload()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12v2h12v-2M8 2v8M4 6l4-4 4 4"/></svg>
+      Cargar CSV / Excel
+    </button>
+    <button class="btn" onclick="exportCSV()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12v2h12v-2M8 10V2M4 6l4 4 4-4"/></svg>
+      Exportar CSV
+    </button>
+    <button class="btn btn-primary" onclick="openAddClient()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+      Agregar cliente
+    </button>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar" id="stats-bar"></div>
+
+<!-- Upload section -->
+<div class="upload-section" id="upload-section">
+  <h3>Cargar datos desde archivo</h3>
+  <p>Sube un archivo CSV o Excel con columnas: <strong>cliente, modulo, consultor, rol, foto_url</strong></p>
+  <label class="upload-label" for="csv-file-input">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12v2h12v-2M8 2v8M4 6l4-4 4 4"/></svg>
+    Seleccionar archivo
+  </label>
+  <input type="file" id="csv-file-input" accept=".csv,.xlsx,.xls" onchange="handleFileUpload(this)">
+  <div class="upload-note">Formatos soportados: CSV (UTF-8), Excel (.xlsx, .xls)</div>
+  <span class="download-template" onclick="downloadTemplate()">Descargar plantilla CSV de ejemplo</span>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <label>Buscar:</label>
+  <input type="text" id="search-input" placeholder="Consultor o cliente..." oninput="renderMatrix()">
+  <label>Filtrar módulo:</label>
+  <select id="module-filter" onchange="renderMatrix()">
+    <option value="">Todos los módulos</option>
+  </select>
+  <label>Vista:</label>
+  <select id="view-mode" onchange="renderMatrix()">
+    <option value="grid">Cuadrícula</option>
+    <option value="compact">Compacta</option>
+  </select>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--teal-200)"></div>Con consultor asignado</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--bg);border:0.5px solid var(--border)"></div>Sin asignación</div>
+  <div class="legend-item" style="font-size:11px;color:var(--text3);margin-left:auto">Clic en celda para asignar · Hover para eliminar</div>
+</div>
+
+<!-- Matrix -->
+<div class="matrix-wrapper">
+  <table class="matrix-table" id="matrix-table"></table>
+</div>
+
+<!-- Empty state -->
+<div class="empty-state" id="empty-state" style="display:none">
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="6"/><line x1="14" y1="16" x2="34" y2="16"/><line x1="14" y1="24" x2="28" y2="24"/><line x1="14" y1="32" x2="22" y2="32"/></svg>
+  <h3>No hay clientes aún</h3>
+  <p>Agrega un cliente usando el botón superior o carga un archivo CSV / Excel.</p>
+</div>
+
+<!-- Modal asignar consultor -->
+<div class="modal-backdrop" id="modal-assign">
+  <div class="modal">
+    <h2 id="modal-title">Asignar consultor</h2>
+    <p class="modal-sub" id="modal-sub"></p>
+    <input type="hidden" id="modal-client">
+    <input type="hidden" id="modal-module">
+    <div class="avatar-preview-wrap">
+      <div id="avatar-preview">?</div>
+      <div>
+        <label class="file-btn" for="photo-input">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="14" height="11" rx="2"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1"/><circle cx="8" cy="9" r="2.5"/></svg>
+          Subir foto
+        </label>
+        <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoUpload(this)">
+        <div style="font-size:11px;color:var(--text3);margin-top:4px">O pega URL de foto</div>
+        <input type="text" id="photo-url" placeholder="https://..." oninput="updateAvatarPreview()" style="margin-top:4px;margin-bottom:0;font-size:11px;padding:4px 8px">
+      </div>
+    </div>
+    <label>Nombre del consultor *</label>
+    <input type="text" id="consultant-name" placeholder="Ej: María López" oninput="updateInitials()">
+    <label>Rol / Especialidad</label>
+    <input type="text" id="consultant-role" placeholder="Ej: Senior Consultant">
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveAssignment()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal agregar cliente -->
+<div class="modal-backdrop" id="modal-client">
+  <div class="modal">
+    <h2>Agregar cliente</h2>
+    <p class="modal-sub">El cliente aparecerá como fila en la matriz</p>
+    <label>Nombre del cliente *</label>
+    <input type="text" id="new-client-name" placeholder="Ej: Empresa ABC">
+    <div class="modal-footer">
+      <button class="btn" onclick="closeClientModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveClient()">Agregar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ─── State ───────────────────────────────────────────────
+const MODULES = [
+  'EC (Employee Central)',
+  'Recruiting (RCM/RMK)',
+  'Performance & Goals',
+  'Learning (LMS)',
+  'Compensation',
+  'Succession & Dev.',
+  'Onboarding',
+  'Time Off'
+];
+
+const MODULE_COLORS = [
+  '#185FA5','#0F6E56','#534AB7','#854F0B','#993C1D','#3B6D11','#0C447C','#633806'
+];
+
+// data[client][module] = { name, role, photo }
+let data = {};
+let clients = [];
+let photoDataMap = {}; // temp store for base64 photos
+
+const STORAGE_KEY = 'sf_matrix_v2';
+
+function loadState() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) { const p = JSON.parse(s); clients = p.clients || []; data = p.data || {}; }
+  } catch(e) {}
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ clients, data })); } catch(e) {}
+}
+
+// ─── Init ──────────────────────────────────────────────
+loadState();
+populateModuleFilter();
+renderMatrix();
+renderStats();
+
+function populateModuleFilter() {
+  const sel = document.getElementById('module-filter');
+  MODULES.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; sel.appendChild(o); });
+}
+
+// ─── Render ────────────────────────────────────────────
+function renderMatrix() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const modFilter = document.getElementById('module-filter').value;
+  const compact = document.getElementById('view-mode').value === 'compact';
+
+  const filteredClients = clients.filter(c => {
+    if (search) {
+      if (c.toLowerCase().includes(search)) return true;
+      const row = data[c] || {};
+      return Object.values(row).some(v => v && v.name && v.name.toLowerCase().includes(search));
+    }
+    return true;
+  });
+
+  const filteredModules = modFilter ? MODULES.filter(m => m === modFilter) : MODULES;
+
+  document.getElementById('empty-state').style.display = clients.length === 0 ? 'block' : 'none';
+  document.getElementById('matrix-table').style.display = clients.length === 0 ? 'none' : '';
+
+  const tbl = document.getElementById('matrix-table');
+  tbl.innerHTML = '';
+
+  // Header row
+  const thead = document.createElement('tr');
+  const cornerTh = document.createElement('th');
+  cornerTh.className = 'cell-corner';
+  thead.appendChild(cornerTh);
+
+  filteredModules.forEach((m, i) => {
+    const th = document.createElement('th');
+    th.innerHTML = `<div class="cell-module-header" style="background:${MODULE_COLORS[MODULES.indexOf(m)]}">${m}</div>`;
+    thead.appendChild(th);
+  });
+  tbl.appendChild(thead);
+
+  // Data rows
+  filteredClients.forEach(client => {
+    const tr = document.createElement('tr');
+    const clientTd = document.createElement('td');
+    clientTd.innerHTML = `<div class="cell-client-header">
+      ${client}
+      <button onclick="removeClient('${escAttr(client)}')" title="Eliminar cliente" style="margin-left:8px;background:none;border:none;cursor:pointer;color:var(--text3);font-size:12px;opacity:.6;vertical-align:middle" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=.6">✕</button>
+    </div>`;
+    tr.appendChild(clientTd);
+
+    filteredModules.forEach(module => {
+      const td = document.createElement('td');
+      const entry = (data[client] || {})[module];
+      const cellHeight = compact ? '72px' : '90px';
+      td.innerHTML = buildCell(client, module, entry, compact, cellHeight);
+      tr.appendChild(td);
+    });
+    tbl.appendChild(tr);
+  });
+
+  renderStats();
+}
+
+function buildCell(client, module, entry, compact, h) {
+  const height = h || (compact ? '72px' : '90px');
+  const filled = entry && entry.name ? 'filled' : '';
+  const initials = entry && entry.name ? getInitials(entry.name) : '';
+  const photoHtml = entry && entry.photo
+    ? `<img class="consultant-avatar" src="${escAttr(entry.photo)}" alt="${escAttr(entry.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    : '';
+  const initialsHtml = `<div class="consultant-initials" style="${entry && entry.photo ? 'display:none' : ''}">${initials}</div>`;
+
+  if (entry && entry.name) {
+    return `<td class="cell-data ${filled}" style="height:${height}">
+      <button class="cell-remove" onclick="removeAssignment('${escAttr(client)}','${escAttr(module)}',event)" title="Eliminar">✕</button>
+      <div class="consultant-card" onclick="openAssign('${escAttr(client)}','${escAttr(module)}')">
+        ${photoHtml}${initialsHtml}
+        <div class="consultant-name" title="${escAttr(entry.name)}">${esc(entry.name)}</div>
+        ${entry.role ? `<div class="consultant-role" title="${escAttr(entry.role)}">${esc(entry.role)}</div>` : ''}
+      </div>
+    </td>`;
+  }
+  return `<td class="cell-data" style="height:${height}">
+    <div class="cell-empty" onclick="openAssign('${escAttr(client)}','${escAttr(module)}')">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><line x1="10" y1="6" x2="10" y2="14"/><line x1="6" y1="10" x2="14" y2="10"/></svg>
+    </div>
+  </td>`;
+}
+
+function renderStats() {
+  const total = clients.length * MODULES.length;
+  let filled = 0;
+  clients.forEach(c => { MODULES.forEach(m => { if ((data[c]||{})[m]?.name) filled++; }); });
+  const pct = total > 0 ? Math.round(filled/total*100) : 0;
+  const uniqueConsultants = new Set();
+  clients.forEach(c => { MODULES.forEach(m => { const e = (data[c]||{})[m]; if (e?.name) uniqueConsultants.add(e.name); }); });
+
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-pill"><strong>${clients.length}</strong> clientes</div>
+    <div class="stat-pill"><strong>${MODULES.length}</strong> módulos</div>
+    <div class="stat-pill"><strong>${filled}</strong> / ${total} celdas asignadas</div>
+    <div class="stat-pill"><strong>${pct}%</strong> completitud</div>
+    <div class="stat-pill"><strong>${uniqueConsultants.size}</strong> consultores únicos</div>
+  `;
+}
+
+// ─── Assign modal ──────────────────────────────────────
+let currentPhotoBase64 = null;
+
+function openAssign(client, module) {
+  document.getElementById('modal-title').textContent = 'Asignar consultor';
+  document.getElementById('modal-sub').textContent = `${client} · ${module}`;
+  document.getElementById('modal-client').value = client;
+  document.getElementById('modal-module').value = module;
+  const entry = (data[client] || {})[module] || {};
+  document.getElementById('consultant-name').value = entry.name || '';
+  document.getElementById('consultant-role').value = entry.role || '';
+  document.getElementById('photo-url').value = (!entry.photo || entry.photo.startsWith('data:')) ? '' : (entry.photo || '');
+  currentPhotoBase64 = entry.photo && entry.photo.startsWith('data:') ? entry.photo : null;
+  updateAvatarPreview();
+  document.getElementById('modal-assign').classList.add('open');
+  setTimeout(() => document.getElementById('consultant-name').focus(), 80);
+}
+function closeModal() { document.getElementById('modal-assign').classList.remove('open'); currentPhotoBase64 = null; }
+
+function handlePhotoUpload(input) {
+  if (!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    currentPhotoBase64 = e.target.result;
+    document.getElementById('photo-url').value = '';
+    const prev = document.getElementById('avatar-preview');
+    prev.innerHTML = `<img src="${currentPhotoBase64}" style="width:48px;height:48px;border-radius:50%;object-fit:cover">`;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function updateAvatarPreview() {
+  const url = document.getElementById('photo-url').value.trim();
+  const name = document.getElementById('consultant-name').value.trim();
+  const prev = document.getElementById('avatar-preview');
+  if (url) { prev.innerHTML = `<img src="${escAttr(url)}" style="width:48px;height:48px;border-radius:50%;object-fit:cover" onerror="this.parentElement.textContent='?'">`; currentPhotoBase64 = null; }
+  else if (currentPhotoBase64) { prev.innerHTML = `<img src="${currentPhotoBase64}" style="width:48px;height:48px;border-radius:50%;object-fit:cover">`; }
+  else { prev.textContent = name ? getInitials(name) : '?'; }
+}
+function updateInitials() {
+  if (!document.getElementById('photo-url').value && !currentPhotoBase64) updateAvatarPreview();
+}
+
+function saveAssignment() {
+  const client = document.getElementById('modal-client').value;
+  const module = document.getElementById('modal-module').value;
+  const name = document.getElementById('consultant-name').value.trim();
+  const role = document.getElementById('consultant-role').value.trim();
+  const photoUrl = document.getElementById('photo-url').value.trim();
+  if (!name) { document.getElementById('consultant-name').focus(); return; }
+  if (!data[client]) data[client] = {};
+  data[client][module] = { name, role, photo: currentPhotoBase64 || photoUrl || '' };
+  saveState();
+  closeModal();
+  renderMatrix();
+  showToast('Consultor asignado correctamente');
+}
+
+function removeAssignment(client, module, e) {
+  e.stopPropagation();
+  if (!data[client]) return;
+  delete data[client][module];
+  saveState(); renderMatrix();
+  showToast('Asignación eliminada');
+}
+
+// ─── Client modal ──────────────────────────────────────
+function openAddClient() {
+  document.getElementById('new-client-name').value = '';
+  document.getElementById('modal-client').classList.remove('open');
+  document.getElementById('modal-client-modal').classList.add('open');
+  setTimeout(() => document.getElementById('new-client-name').focus(), 80);
+}
+function closeClientModal() { document.getElementById('modal-client-modal').classList.remove('open'); }
+function saveClient() {
+  const name = document.getElementById('new-client-name').value.trim();
+  if (!name) { document.getElementById('new-client-name').focus(); return; }
+  if (clients.includes(name)) { showToast('El cliente ya existe'); return; }
+  clients.push(name);
+  if (!data[name]) data[name] = {};
+  saveState(); closeClientModal(); renderMatrix();
+  showToast(`Cliente "${name}" agregado`);
+}
+function removeClient(client) {
+  if (!confirm(`¿Eliminar el cliente "${client}" y todas sus asignaciones?`)) return;
+  clients = clients.filter(c => c !== client);
+  delete data[client];
+  saveState(); renderMatrix();
+  showToast(`Cliente eliminado`);
+}
+
+// Fix: rename modal id
+document.getElementById('modal-client').id = 'modal-client-modal';
+
+// ─── File upload ───────────────────────────────────────
+function toggleUpload() {
+  const sec = document.getElementById('upload-section');
+  sec.classList.toggle('visible');
+}
+
+function handleFileUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const name = file.name.toLowerCase();
+  if (name.endsWith('.csv')) {
+    const reader = new FileReader();
+    reader.onload = e => parseCSV(e.target.result);
+    reader.readAsText(file, 'UTF-8');
+  } else if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      const csvLines = rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+      parseCSV(csvLines);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+  input.value = '';
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) { showToast('Archivo vacío o sin datos'); return; }
+  const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g,'').trim().toLowerCase());
+  const iCliente = headers.findIndex(h => h.includes('client'));
+  const iModulo = headers.findIndex(h => h.includes('modul') || h.includes('módulo'));
+  const iConsultor = headers.findIndex(h => h.includes('consul'));
+  const iRol = headers.findIndex(h => h.includes('rol') || h.includes('role'));
+  const iFoto = headers.findIndex(h => h.includes('foto') || h.includes('photo') || h.includes('url'));
+
+  if (iCliente < 0 || iModulo < 0 || iConsultor < 0) {
+    showToast('Error: columnas requeridas: cliente, modulo, consultor'); return;
+  }
+
+  let added = 0;
+  for (let i = 1; i < lines.length; i++) {
+    const cols = splitCSVLine(lines[i]);
+    const cliente = (cols[iCliente]||'').trim();
+    const modulo = (cols[iModulo]||'').trim();
+    const consultor = (cols[iConsultor]||'').trim();
+    const rol = iRol >= 0 ? (cols[iRol]||'').trim() : '';
+    const foto = iFoto >= 0 ? (cols[iFoto]||'').trim() : '';
+    if (!cliente || !modulo || !consultor) continue;
+
+    const matchedModule = MODULES.find(m => m.toLowerCase().includes(modulo.toLowerCase().substring(0,4)) || modulo.toLowerCase().includes(m.toLowerCase().substring(0,4)));
+    if (!matchedModule) continue;
+    if (!clients.includes(cliente)) clients.push(cliente);
+    if (!data[cliente]) data[cliente] = {};
+    data[cliente][matchedModule] = { name: consultor, role: rol, photo: foto };
+    added++;
+  }
+
+  saveState(); renderMatrix();
+  showToast(`${added} asignaciones importadas`);
+  document.getElementById('upload-section').classList.remove('visible');
+}
+
+function splitCSVLine(line) {
+  const result = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === '"') { inQ = !inQ; }
+    else if (line[i] === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+    else { cur += line[i]; }
+  }
+  result.push(cur.trim());
+  return result.map(c => c.replace(/^"|"$/g,''));
+}
+
+function downloadTemplate() {
+  const rows = [
+    ['cliente','modulo','consultor','rol','foto_url'],
+    ['Empresa ABC','EC (Employee Central)','Ana Martínez','Senior Consultant',''],
+    ['Empresa ABC','Recruiting (RCM/RMK)','Luis Torres','Lead Consultant',''],
+    ['Empresa XYZ','Performance & Goals','María López','Functional Consultant','https://ejemplo.com/foto.jpg'],
+    ['Empresa XYZ','Learning (LMS)','Carlos Ruiz','Senior Consultant',''],
+  ];
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'plantilla_matriz_sf.csv'; a.click();
+}
+
+function exportCSV() {
+  if (clients.length === 0) { showToast('No hay datos para exportar'); return; }
+  const rows = [['cliente','modulo','consultor','rol','foto_url']];
+  clients.forEach(c => {
+    MODULES.forEach(m => {
+      const e = (data[c]||{})[m];
+      if (e?.name) rows.push([c, m, e.name, e.role||'', e.photo && !e.photo.startsWith('data:') ? e.photo : '']);
+    });
+  });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'matriz_consultores_sf.csv'; a.click();
+  showToast('CSV exportado');
+}
+
+// ─── Helpers ───────────────────────────────────────────
+function getInitials(name) {
+  return name.split(' ').filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('');
+}
+function esc(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(str) { return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Close modals on backdrop click
+document.getElementById('modal-assign').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.getElementById('modal-client-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeClientModal(); });
+
+// Enter key on inputs
+document.getElementById('consultant-name').addEventListener('keydown', e => { if (e.key === 'Enter') saveAssignment(); });
+document.getElementById('new-client-name').addEventListener('keydown', e => { if (e.key === 'Enter') saveClient(); });
+</script>
+</body>
+</html>
