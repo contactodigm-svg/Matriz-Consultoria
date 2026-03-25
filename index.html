@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matriz Consultores SuccessFactors</title>
+<title>Matriz de Consultores C9</title>
 <style>
   :root {
     --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-200:#85B7EB;--blue-400:#378ADD;--blue-600:#185FA5;--blue-800:#0C447C;--blue-900:#042C53;
     --teal-50:#E1F5EE;--teal-100:#9FE1CB;--teal-200:#5DCAA5;--teal-400:#1D9E75;--teal-600:#0F6E56;--teal-800:#085041;
     --gray-50:#F1EFE8;--gray-100:#D3D1C7;--gray-200:#B4B2A9;--gray-400:#888780;--gray-600:#5F5E5A;--gray-800:#444441;
-    --amber-50:#FAEEDA;--amber-100:#FAC775;--amber-400:#BA7517;--amber-600:#854F0B;--amber-800:#633806;
+    --amber-50:#FAEEDA;--amber-100:#FAC775;--amber-400:#BA7517;--amber-600:#854F0B;
     --coral-50:#FAECE7;--coral-100:#F5C4B3;--coral-400:#D85A30;--coral-600:#993C1D;
     --purple-50:#EEEDFE;--purple-100:#CECBF6;--purple-400:#7F77DD;--purple-600:#534AB7;--purple-800:#3C3489;
     --green-50:#EAF3DE;--green-100:#C0DD97;--green-400:#639922;--green-600:#3B6D11;
@@ -24,122 +24,132 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
 
-  /* ─── Header ─── */
   .app-header{padding:20px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .header-left h1{font-size:20px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
+  .header-left h1{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
+  .header-left h1 span{color:var(--blue-600)}
   .header-left p{font-size:13px;color:var(--text2);margin-top:2px}
   .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-  /* ─── Buttons ─── */
-  .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--border2);background:var(--bg);color:var(--text);transition:background .15s,border-color .15s}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--border2);background:var(--bg);color:var(--text);transition:background .15s,border-color .15s;white-space:nowrap}
   .btn:hover{background:var(--bg2);border-color:var(--blue-400)}
   .btn-primary{background:var(--blue-600);color:#fff;border-color:var(--blue-600)}
   .btn-primary:hover{background:var(--blue-800);border-color:var(--blue-800)}
   .btn-danger{background:var(--coral-400);color:#fff;border-color:var(--coral-400)}
   .btn-danger:hover{background:var(--coral-600);border-color:var(--coral-600)}
+  .btn-sm{padding:4px 10px;font-size:12px}
   .btn svg{flex-shrink:0}
 
-  /* ─── Stats bar ─── */
   .stats-bar{display:flex;gap:10px;padding:14px 24px 0;flex-wrap:wrap}
   .stat-pill{background:var(--bg2);border:0.5px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
   .stat-pill strong{color:var(--text);font-weight:600}
 
-  /* ─── Toolbar ─── */
   .toolbar{display:flex;align-items:center;gap:10px;padding:14px 24px 0;flex-wrap:wrap}
   .toolbar label{font-size:13px;color:var(--text2);white-space:nowrap}
   .toolbar input,.toolbar select{padding:6px 10px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font)}
   .toolbar input{width:200px}
   .toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.15)}
 
-  /* ─── Matrix wrapper ─── */
   .matrix-wrapper{padding:20px 24px 32px;overflow-x:auto}
   .matrix-table{border-collapse:separate;border-spacing:4px;min-width:max-content}
-
-  /* ─── Cells ─── */
-  .cell-corner{width:130px;min-width:130px}
+  .cell-corner{width:140px;min-width:140px}
   .cell-module-header{
     background:var(--blue-600);color:#fff;
     text-align:center;padding:10px 6px;
     border-radius:var(--radius-sm);
-    font-size:12px;font-weight:600;letter-spacing:.2px;
+    font-size:11px;font-weight:600;letter-spacing:.2px;
     min-width:110px;max-width:130px;width:120px;
-    line-height:1.3
+    line-height:1.3;position:relative
   }
+  .module-header-actions{position:absolute;top:3px;right:3px;display:none;gap:2px;align-items:center}
+  .cell-module-header:hover .module-header-actions{display:flex}
+  .mod-btn{width:16px;height:16px;border-radius:3px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1}
+  .mod-btn-edit{background:rgba(255,255,255,.28);color:#fff}
+  .mod-btn-del{background:rgba(220,70,50,.75);color:#fff}
+  .mod-btn:hover{opacity:.8}
   .cell-client-header{
     background:var(--bg2);border:0.5px solid var(--border);
     padding:8px 12px;border-radius:var(--radius-sm);
     font-size:12px;font-weight:600;color:var(--text);
-    text-align:right;white-space:nowrap;
-    width:130px;min-width:130px
+    text-align:right;white-space:nowrap;width:140px;min-width:140px
   }
   .cell-data{
     background:var(--bg);border:0.5px solid var(--border);
     border-radius:var(--radius-sm);
-    width:120px;min-width:110px;max-width:130px;
-    height:90px;vertical-align:top;
-    position:relative;overflow:hidden;
+    width:120px;min-width:110px;max-width:130px;height:92px;
+    vertical-align:top;position:relative;overflow:hidden;
     transition:border-color .15s,box-shadow .15s
   }
   .cell-data:hover{border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.12)}
   .cell-data.filled{background:var(--teal-50);border-color:var(--teal-200)}
-  @media (prefers-color-scheme:dark){
-    .cell-data.filled{background:rgba(29,158,117,.12);border-color:var(--teal-600)}
-  }
-
-  /* ─── Consultant card inside cell ─── */
-  .consultant-card{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:6px 4px;gap:4px;text-align:center;cursor:pointer}
-  .consultant-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--teal-200);background:var(--teal-50);flex-shrink:0}
-  .consultant-initials{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--blue-800);background:var(--blue-100);border:2px solid var(--blue-200);flex-shrink:0}
-  .consultant-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.2;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .consultant-role{font-size:10px;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .cell-empty{display:flex;align-items:center;justify-content:center;height:100%;cursor:pointer;opacity:.4;transition:opacity .15s}
-  .cell-empty:hover{opacity:.8}
-  .cell-empty svg{color:var(--text3)}
-  .cell-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:var(--coral-400);color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:10px;line-height:1;font-weight:700;z-index:2}
+  @media (prefers-color-scheme:dark){.cell-data.filled{background:rgba(29,158,117,.12);border-color:var(--teal-600)}}
+  .consultant-card{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:6px 4px;gap:3px;text-align:center;cursor:pointer}
+  .consultant-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--teal-200);background:var(--teal-50);flex-shrink:0}
+  .consultant-initials{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--blue-800);background:var(--blue-100);border:2px solid var(--blue-200);flex-shrink:0}
+  .consultant-name{font-size:11px;font-weight:600;color:var(--text);line-height:1.2;max-width:108px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .consultant-role{font-size:10px;color:var(--text2);max-width:108px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .comment-dot{width:6px;height:6px;border-radius:50%;background:var(--amber-400);flex-shrink:0}
+  .cell-empty{display:flex;align-items:center;justify-content:center;height:100%;cursor:pointer;opacity:.35;transition:opacity .15s}
+  .cell-empty:hover{opacity:.75}
+  .cell-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:var(--coral-400);color:#fff;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:10px;font-weight:700;z-index:2}
   .cell-data:hover .cell-remove{display:flex}
 
-  /* ─── Upload zone ─── */
   .upload-section{margin:0 24px;padding:20px;border:1.5px dashed var(--border2);border-radius:var(--radius);background:var(--bg2);text-align:center;display:none}
   .upload-section.visible{display:block}
-  .upload-section h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .upload-section h3{font-size:14px;font-weight:600;margin-bottom:6px}
   .upload-section p{font-size:12px;color:var(--text2);margin-bottom:14px}
   #csv-file-input{display:none}
   .upload-label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:9px 18px;background:var(--blue-600);color:#fff;border-radius:var(--radius-sm);font-size:13px;font-weight:500;transition:background .15s}
   .upload-label:hover{background:var(--blue-800)}
-  .upload-note{font-size:11px;color:var(--text3);margin-top:12px}
-  .download-template{color:var(--blue-600);cursor:pointer;text-decoration:underline;font-size:12px;margin-top:6px;display:inline-block}
-  .download-template:hover{color:var(--blue-800)}
+  .upload-note{font-size:11px;color:var(--text3);margin-top:10px}
+  .link-btn{color:var(--blue-600);cursor:pointer;text-decoration:underline;font-size:12px;margin-top:6px;display:inline-block;background:none;border:none;font-family:var(--font)}
+  .link-btn:hover{color:var(--blue-800)}
 
-  /* ─── Modal ─── */
   .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
   .modal-backdrop.open{display:flex}
-  .modal{background:var(--bg);border-radius:var(--radius);border:0.5px solid var(--border);padding:24px;width:100%;max-width:420px;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+  .modal{background:var(--bg);border-radius:var(--radius);border:0.5px solid var(--border);padding:24px;width:100%;max-width:440px;box-shadow:0 20px 40px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto}
   .modal h2{font-size:16px;font-weight:600;margin-bottom:4px}
-  .modal .modal-sub{font-size:12px;color:var(--text2);margin-bottom:18px}
+  .modal .modal-sub{font-size:12px;color:var(--text2);margin-bottom:18px;padding-bottom:14px;border-bottom:0.5px solid var(--border)}
   .modal label{display:block;font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500}
-  .modal input,.modal select{width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);margin-bottom:14px}
-  .modal input:focus,.modal select:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.15)}
-  .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
-  .avatar-preview-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  #avatar-preview{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:var(--blue-800)}
-  .file-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;color:var(--text2)}
+  .modal input[type=text],.modal select,.modal textarea{width:100%;padding:8px 10px;border-radius:var(--radius-sm);border:0.5px solid var(--border2);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);margin-bottom:14px}
+  .modal textarea{resize:vertical;min-height:76px;line-height:1.5}
+  .modal input[type=text]:focus,.modal select:focus,.modal textarea:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.15)}
+  .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;padding-top:14px;border-top:0.5px solid var(--border)}
+  .avatar-preview-wrap{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:12px;background:var(--bg2);border-radius:var(--radius-sm);border:0.5px solid var(--border)}
+  #avatar-preview{width:52px;height:52px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--blue-800);flex-shrink:0;overflow:hidden}
+  #avatar-preview img{width:100%;height:100%;object-fit:cover}
+  .file-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;color:var(--text2);transition:border-color .15s}
   .file-btn:hover{border-color:var(--blue-400);color:var(--text)}
   #photo-input{display:none}
+  .section-divider{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
 
-  /* ─── Toast ─── */
+  .module-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;max-height:280px;overflow-y:auto}
+  .module-row{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm)}
+  .module-color-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .module-row-name{flex:1;font-size:13px;font-weight:500;color:var(--text)}
+  .module-row-actions{display:flex;gap:4px}
+  .new-module-form{display:flex;gap:8px;align-items:flex-end;padding:12px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-sm)}
+  .new-module-form input{margin-bottom:0;flex:1}
+  .color-pick{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+  .color-swatch{width:22px;height:22px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:transform .1s}
+  .color-swatch.selected,.color-swatch:hover{border-color:var(--text);transform:scale(1.15)}
+
   .toast{position:fixed;bottom:24px;right:24px;background:var(--teal-600);color:#fff;padding:10px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;z-index:200;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
   .toast.show{opacity:1;transform:translateY(0)}
-
-  /* ─── Legend ─── */
   .legend{display:flex;gap:16px;padding:0 24px 16px;flex-wrap:wrap;align-items:center}
   .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
   .legend-dot{width:12px;height:12px;border-radius:3px}
-
-  /* ─── Empty state ─── */
   .empty-state{text-align:center;padding:48px 24px;color:var(--text2)}
-  .empty-state svg{opacity:.3;margin-bottom:12px}
+  .empty-state svg{opacity:.25;margin-bottom:12px}
   .empty-state h3{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px}
   .empty-state p{font-size:13px}
+
+  /* ─── Inline confirm dialog ─── */
+  .confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+  .confirm-overlay.open{display:flex}
+  .confirm-box{background:var(--bg);border-radius:var(--radius);border:0.5px solid var(--border);padding:24px;width:100%;max-width:360px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+  .confirm-box h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .confirm-box p{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+  .confirm-actions{display:flex;gap:8px;justify-content:flex-end}
 </style>
 </head>
 <body>
@@ -147,8 +157,8 @@
 <!-- Header -->
 <div class="app-header">
   <div class="header-left">
-    <h1>Matriz de Consultores — SuccessFactors</h1>
-    <p>Visualización de participación por cliente y módulo</p>
+    <h1>Matriz de Consultores <span>C9</span></h1>
+    <p>Visualización de participación por cliente y módulo · SuccessFactors</p>
   </div>
   <div class="header-actions">
     <button class="btn" onclick="toggleUpload()">
@@ -159,6 +169,10 @@
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12v2h12v-2M8 10V2M4 6l4 4 4-4"/></svg>
       Exportar CSV
     </button>
+    <button class="btn" onclick="openModuleManager()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+      Módulos
+    </button>
     <button class="btn btn-primary" onclick="openAddClient()">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
       Agregar cliente
@@ -166,88 +180,83 @@
   </div>
 </div>
 
-<!-- Stats -->
 <div class="stats-bar" id="stats-bar"></div>
 
-<!-- Upload section -->
+<!-- Upload -->
 <div class="upload-section" id="upload-section">
   <h3>Cargar datos desde archivo</h3>
-  <p>Sube un archivo CSV o Excel con columnas: <strong>cliente, modulo, consultor, rol, foto_url</strong></p>
+  <p>Columnas requeridas: <strong>cliente, modulo, consultor</strong> · Opcionales: <strong>rol, foto_url, comentario</strong></p>
   <label class="upload-label" for="csv-file-input">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12v2h12v-2M8 2v8M4 6l4-4 4 4"/></svg>
-    Seleccionar archivo
+    Seleccionar archivo (.csv / .xlsx)
   </label>
   <input type="file" id="csv-file-input" accept=".csv,.xlsx,.xls" onchange="handleFileUpload(this)">
   <div class="upload-note">Formatos soportados: CSV (UTF-8), Excel (.xlsx, .xls)</div>
-  <span class="download-template" onclick="downloadTemplate()">Descargar plantilla CSV de ejemplo</span>
+  <button class="link-btn" onclick="downloadTemplate()">Descargar plantilla CSV de ejemplo</button>
 </div>
 
 <!-- Toolbar -->
 <div class="toolbar">
   <label>Buscar:</label>
   <input type="text" id="search-input" placeholder="Consultor o cliente..." oninput="renderMatrix()">
-  <label>Filtrar módulo:</label>
-  <select id="module-filter" onchange="renderMatrix()">
-    <option value="">Todos los módulos</option>
-  </select>
-  <label>Vista:</label>
-  <select id="view-mode" onchange="renderMatrix()">
-    <option value="grid">Cuadrícula</option>
-    <option value="compact">Compacta</option>
-  </select>
+  <label>Módulo:</label>
+  <select id="module-filter" onchange="renderMatrix()"><option value="">Todos</option></select>
+  <select id="view-mode" style="display:none"><option value="grid">grid</option></select>
 </div>
 
 <!-- Legend -->
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:var(--teal-200)"></div>Con consultor asignado</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--teal-200)"></div>Con consultor</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--bg);border:0.5px solid var(--border)"></div>Sin asignación</div>
-  <div class="legend-item" style="font-size:11px;color:var(--text3);margin-left:auto">Clic en celda para asignar · Hover para eliminar</div>
+  <div class="legend-item"><div style="width:8px;height:8px;border-radius:50%;background:var(--amber-400)"></div>Con comentario</div>
+  <div class="legend-item" style="font-size:11px;color:var(--text3);margin-left:auto">Clic para asignar · Hover para eliminar</div>
 </div>
 
 <!-- Matrix -->
 <div class="matrix-wrapper">
   <table class="matrix-table" id="matrix-table"></table>
 </div>
-
-<!-- Empty state -->
 <div class="empty-state" id="empty-state" style="display:none">
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="6"/><line x1="14" y1="16" x2="34" y2="16"/><line x1="14" y1="24" x2="28" y2="24"/><line x1="14" y1="32" x2="22" y2="32"/></svg>
   <h3>No hay clientes aún</h3>
-  <p>Agrega un cliente usando el botón superior o carga un archivo CSV / Excel.</p>
+  <p>Agrega un cliente con el botón superior o carga un archivo CSV / Excel.</p>
 </div>
 
-<!-- Modal asignar consultor -->
+<!-- Modal: Asignar consultor -->
 <div class="modal-backdrop" id="modal-assign">
   <div class="modal">
-    <h2 id="modal-title">Asignar consultor</h2>
-    <p class="modal-sub" id="modal-sub"></p>
-    <input type="hidden" id="modal-client">
-    <input type="hidden" id="modal-module">
+    <h2 id="modal-assign-title">Asignar consultor</h2>
+    <p class="modal-sub" id="modal-assign-sub"></p>
+    <input type="hidden" id="modal-client-val">
+    <input type="hidden" id="modal-module-val">
     <div class="avatar-preview-wrap">
       <div id="avatar-preview">?</div>
-      <div>
+      <div style="flex:1">
         <label class="file-btn" for="photo-input">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="14" height="11" rx="2"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1"/><circle cx="8" cy="9" r="2.5"/></svg>
           Subir foto
         </label>
         <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoUpload(this)">
-        <div style="font-size:11px;color:var(--text3);margin-top:4px">O pega URL de foto</div>
-        <input type="text" id="photo-url" placeholder="https://..." oninput="updateAvatarPreview()" style="margin-top:4px;margin-bottom:0;font-size:11px;padding:4px 8px">
+        <div style="font-size:11px;color:var(--text3);margin-top:8px">O pega URL de imagen</div>
+        <input type="text" id="photo-url" placeholder="https://..." oninput="updateAvatarPreview()" style="margin-top:4px;margin-bottom:0;font-size:12px;padding:5px 8px">
       </div>
     </div>
-    <label>Nombre del consultor *</label>
+    <div class="section-divider" style="margin-top:4px">Datos del consultor</div>
+    <label>Nombre *</label>
     <input type="text" id="consultant-name" placeholder="Ej: María López" oninput="updateInitials()">
     <label>Rol / Especialidad</label>
     <input type="text" id="consultant-role" placeholder="Ej: Senior Consultant">
+    <label>Comentario</label>
+    <textarea id="consultant-comment" placeholder="Notas sobre la participación, etapa del proyecto, observaciones..."></textarea>
     <div class="modal-footer">
-      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="closeAssignModal()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveAssignment()">Guardar</button>
     </div>
   </div>
 </div>
 
-<!-- Modal agregar cliente -->
-<div class="modal-backdrop" id="modal-client">
+<!-- Modal: Agregar cliente -->
+<div class="modal-backdrop" id="modal-add-client">
   <div class="modal">
     <h2>Agregar cliente</h2>
     <p class="modal-sub">El cliente aparecerá como fila en la matriz</p>
@@ -260,175 +269,314 @@
   </div>
 </div>
 
-<!-- Toast -->
+<!-- Modal: Gestionar módulos -->
+<div class="modal-backdrop" id="modal-modules">
+  <div class="modal" style="max-width:480px">
+    <h2>Gestionar módulos</h2>
+    <p class="modal-sub">Agrega, edita o elimina módulos de SuccessFactors</p>
+    <div class="module-list" id="module-list"></div>
+    <div class="section-divider">Agregar nuevo módulo</div>
+    <div class="new-module-form">
+      <div style="flex:1">
+        <label style="margin-bottom:4px;display:block">Nombre</label>
+        <input type="text" id="new-module-name" placeholder="Ej: Workforce Analytics">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="addModule()" style="align-self:flex-end">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+        Agregar
+      </button>
+    </div>
+    <div style="margin-top:12px">
+      <div class="section-divider">Color del nuevo módulo</div>
+      <div class="color-pick" id="color-pick"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModuleModal()">Listo</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmar acción -->
+<div class="modal-backdrop" id="modal-confirm">
+  <div class="modal" style="max-width:360px">
+    <h2 id="confirm-title">Confirmar</h2>
+    <p class="modal-sub" id="confirm-msg" style="margin-bottom:0;border:none;padding:0"></p>
+    <div class="modal-footer" style="margin-top:20px">
+      <button class="btn" onclick="resolveConfirm(false)">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-ok-btn" onclick="resolveConfirm(true)">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Editar módulo -->
+<div class="modal-backdrop" id="modal-edit-module">
+  <div class="modal" style="max-width:380px">
+    <h2>Editar módulo</h2>
+    <p class="modal-sub">Actualiza nombre y color</p>
+    <input type="hidden" id="edit-module-idx">
+    <label>Nombre</label>
+    <input type="text" id="edit-module-name" placeholder="Nombre del módulo">
+    <div class="section-divider">Color</div>
+    <div class="color-pick" id="edit-color-pick"></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeEditModuleModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEditModule()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Inline confirm dialog -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirm-title">¿Confirmar acción?</h3>
+    <p id="confirm-msg"></p>
+    <div class="confirm-actions">
+      <button class="btn" id="confirm-cancel-btn">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-ok-btn">Eliminar</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-// ─── State ───────────────────────────────────────────────
-const MODULES = [
-  'EC (Employee Central)',
-  'Recruiting (RCM/RMK)',
-  'Performance & Goals',
-  'Learning (LMS)',
-  'Compensation',
-  'Succession & Dev.',
-  'Onboarding',
-  'Time Off'
+// ── Palette & defaults ──────────────────────────────────
+const PALETTE = [
+  '#185FA5','#0F6E56','#534AB7','#854F0B','#993C1D','#3B6D11',
+  '#0C447C','#633806','#7F77DD','#1D9E75','#D85A30','#3B8BD4',
+  '#5F5E5A','#BA7517','#639922','#993556'
+];
+const DEFAULT_MODULES = [
+  {name:'EC (Employee Central)',color:'#185FA5'},
+  {name:'Recruiting (RCM/RMK)',color:'#0F6E56'},
+  {name:'Performance & Goals', color:'#534AB7'},
+  {name:'Learning (LMS)',      color:'#854F0B'},
+  {name:'Compensation',        color:'#993C1D'},
+  {name:'Succession & Dev.',   color:'#3B6D11'},
+  {name:'Onboarding',          color:'#0C447C'},
+  {name:'Time Off',            color:'#633806'},
 ];
 
-const MODULE_COLORS = [
-  '#185FA5','#0F6E56','#534AB7','#854F0B','#993C1D','#3B6D11','#0C447C','#633806'
-];
-
-// data[client][module] = { name, role, photo }
-let data = {};
+// ── State ───────────────────────────────────────────────
+let modules = [];
 let clients = [];
-let photoDataMap = {}; // temp store for base64 photos
-
-const STORAGE_KEY = 'sf_matrix_v2';
+let data    = {};
+const STORAGE_KEY = 'sf_matrix_v3';
+let selectedNewColor  = PALETTE[0];
+let selectedEditColor = PALETTE[0];
+let currentPhotoBase64 = null;
 
 function loadState() {
   try {
     const s = localStorage.getItem(STORAGE_KEY);
-    if (s) { const p = JSON.parse(s); clients = p.clients || []; data = p.data || {}; }
-  } catch(e) {}
+    if (s) {
+      const p = JSON.parse(s);
+      modules = p.modules && p.modules.length ? p.modules : JSON.parse(JSON.stringify(DEFAULT_MODULES));
+      clients = p.clients || [];
+      data    = p.data    || {};
+    } else {
+      modules = JSON.parse(JSON.stringify(DEFAULT_MODULES));
+    }
+  } catch(e) { modules = JSON.parse(JSON.stringify(DEFAULT_MODULES)); }
 }
 function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ clients, data })); } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({modules,clients,data})); } catch(e){}
 }
 
-// ─── Init ──────────────────────────────────────────────
+// ── Init ────────────────────────────────────────────────
 loadState();
-populateModuleFilter();
+refreshModuleFilter();
 renderMatrix();
-renderStats();
 
-function populateModuleFilter() {
+function refreshModuleFilter() {
   const sel = document.getElementById('module-filter');
-  MODULES.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; sel.appendChild(o); });
+  while (sel.options.length > 1) sel.remove(1);
+  modules.forEach(m => {
+    const o = document.createElement('option');
+    o.value = m.name; o.textContent = m.name;
+    sel.appendChild(o);
+  });
 }
 
-// ─── Render ────────────────────────────────────────────
+// ── Render ──────────────────────────────────────────────
 function renderMatrix() {
-  const search = document.getElementById('search-input').value.toLowerCase();
+  const search    = document.getElementById('search-input').value.toLowerCase();
   const modFilter = document.getElementById('module-filter').value;
-  const compact = document.getElementById('view-mode').value === 'compact';
+  const compact   = document.getElementById('view-mode').value === 'compact';
 
-  const filteredClients = clients.filter(c => {
-    if (search) {
-      if (c.toLowerCase().includes(search)) return true;
-      const row = data[c] || {};
-      return Object.values(row).some(v => v && v.name && v.name.toLowerCase().includes(search));
-    }
-    return true;
+  const filtCl = clients.filter(c => {
+    if (!search) return true;
+    if (c.toLowerCase().includes(search)) return true;
+    return Object.values(data[c]||{}).some(v => v && v.name && v.name.toLowerCase().includes(search));
   });
+  const filtMod = modFilter ? modules.filter(m => m.name === modFilter) : modules;
 
-  const filteredModules = modFilter ? MODULES.filter(m => m === modFilter) : MODULES;
-
-  document.getElementById('empty-state').style.display = clients.length === 0 ? 'block' : 'none';
-  document.getElementById('matrix-table').style.display = clients.length === 0 ? 'none' : '';
+  document.getElementById('empty-state').style.display  = clients.length === 0 ? 'block' : 'none';
+  document.getElementById('matrix-table').style.display = clients.length === 0 ? 'none'  : '';
 
   const tbl = document.getElementById('matrix-table');
   tbl.innerHTML = '';
+  const h = compact ? '76px' : '92px';
 
-  // Header row
+  // Header
   const thead = document.createElement('tr');
-  const cornerTh = document.createElement('th');
-  cornerTh.className = 'cell-corner';
-  thead.appendChild(cornerTh);
-
-  filteredModules.forEach((m, i) => {
+  const thCorner = document.createElement('th');
+  thCorner.className = 'cell-corner';
+  thead.appendChild(thCorner);
+  filtMod.forEach(m => {
     const th = document.createElement('th');
-    th.innerHTML = `<div class="cell-module-header" style="background:${MODULE_COLORS[MODULES.indexOf(m)]}">${m}</div>`;
+    const idx = modules.findIndex(x => x.name === m.name);
+
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'cell-module-header';
+    headerDiv.style.background = m.color;
+    headerDiv.textContent = m.name;
+
+    const actions = document.createElement('div');
+    actions.className = 'module-header-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'mod-btn mod-btn-edit';
+    editBtn.title = 'Editar módulo';
+    editBtn.textContent = '✎';
+    editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModule(idx); });
+
+    const delBtn2 = document.createElement('button');
+    delBtn2.className = 'mod-btn mod-btn-del';
+    delBtn2.title = 'Eliminar módulo';
+    delBtn2.textContent = '✕';
+    delBtn2.addEventListener('click', e => { e.stopPropagation(); deleteModule(idx); });
+
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn2);
+    headerDiv.appendChild(actions);
+    th.appendChild(headerDiv);
     thead.appendChild(th);
   });
   tbl.appendChild(thead);
 
-  // Data rows
-  filteredClients.forEach(client => {
+  // Rows
+  filtCl.forEach(client => {
     const tr = document.createElement('tr');
+
+    // Client header
     const clientTd = document.createElement('td');
-    clientTd.innerHTML = `<div class="cell-client-header">
-      ${client}
-      <button onclick="removeClient('${escAttr(client)}')" title="Eliminar cliente" style="margin-left:8px;background:none;border:none;cursor:pointer;color:var(--text3);font-size:12px;opacity:.6;vertical-align:middle" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=.6">✕</button>
-    </div>`;
+    const clientDiv = document.createElement('div');
+    clientDiv.className = 'cell-client-header';
+    clientDiv.textContent = client;
+    const delClientBtn = document.createElement('button');
+    delClientBtn.title = 'Eliminar cliente';
+    delClientBtn.textContent = '✕';
+    delClientBtn.style.cssText = 'margin-left:6px;background:none;border:none;cursor:pointer;color:var(--text3);font-size:11px;opacity:.5;vertical-align:middle';
+    delClientBtn.addEventListener('mouseenter', () => delClientBtn.style.opacity = '1');
+    delClientBtn.addEventListener('mouseleave', () => delClientBtn.style.opacity = '.5');
+    delClientBtn.addEventListener('click', () => removeClient(client));
+    clientDiv.appendChild(delClientBtn);
+    clientTd.appendChild(clientDiv);
     tr.appendChild(clientTd);
 
-    filteredModules.forEach(module => {
+    filtMod.forEach(m => {
+      const entry = (data[client]||{})[m.name];
       const td = document.createElement('td');
-      const entry = (data[client] || {})[module];
-      const cellHeight = compact ? '72px' : '90px';
-      td.innerHTML = buildCell(client, module, entry, compact, cellHeight);
+
+      if (entry && entry.name) {
+        td.className = 'cell-data filled';
+        td.style.height = h;
+
+        const rmBtn = document.createElement('button');
+        rmBtn.className = 'cell-remove';
+        rmBtn.textContent = '✕';
+        rmBtn.addEventListener('click', e => removeAssignment(client, m.name, e));
+        td.appendChild(rmBtn);
+
+        const card = document.createElement('div');
+        card.className = 'consultant-card';
+        card.addEventListener('click', () => openAssign(client, m.name));
+
+        if (entry.photo) {
+          const img = document.createElement('img');
+          img.className = 'consultant-avatar';
+          img.src = entry.photo;
+          img.alt = entry.name;
+          img.addEventListener('error', () => { img.style.display = 'none'; initDiv.style.display = 'flex'; });
+          card.appendChild(img);
+        }
+
+        const initDiv = document.createElement('div');
+        initDiv.className = 'consultant-initials';
+        initDiv.textContent = getInitials(entry.name);
+        if (entry.photo) initDiv.style.display = 'none';
+        card.appendChild(initDiv);
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'consultant-name';
+        nameDiv.title = entry.name;
+        nameDiv.textContent = entry.name;
+        card.appendChild(nameDiv);
+
+        if (entry.role) {
+          const roleDiv = document.createElement('div');
+          roleDiv.className = 'consultant-role';
+          roleDiv.textContent = entry.role;
+          card.appendChild(roleDiv);
+        }
+
+        if (entry.comment) {
+          const dot = document.createElement('div');
+          dot.className = 'comment-dot';
+          dot.title = entry.comment;
+          card.appendChild(dot);
+        }
+
+        td.appendChild(card);
+      } else {
+        td.className = 'cell-data';
+        td.style.height = h;
+        const empty = document.createElement('div');
+        empty.className = 'cell-empty';
+        empty.innerHTML = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><line x1="10" y1="6" x2="10" y2="14"/><line x1="6" y1="10" x2="14" y2="10"/></svg>`;
+        empty.addEventListener('click', () => openAssign(client, m.name));
+        td.appendChild(empty);
+      }
+
       tr.appendChild(td);
     });
     tbl.appendChild(tr);
   });
-
   renderStats();
 }
 
-function buildCell(client, module, entry, compact, h) {
-  const height = h || (compact ? '72px' : '90px');
-  const filled = entry && entry.name ? 'filled' : '';
-  const initials = entry && entry.name ? getInitials(entry.name) : '';
-  const photoHtml = entry && entry.photo
-    ? `<img class="consultant-avatar" src="${escAttr(entry.photo)}" alt="${escAttr(entry.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-    : '';
-  const initialsHtml = `<div class="consultant-initials" style="${entry && entry.photo ? 'display:none' : ''}">${initials}</div>`;
-
-  if (entry && entry.name) {
-    return `<td class="cell-data ${filled}" style="height:${height}">
-      <button class="cell-remove" onclick="removeAssignment('${escAttr(client)}','${escAttr(module)}',event)" title="Eliminar">✕</button>
-      <div class="consultant-card" onclick="openAssign('${escAttr(client)}','${escAttr(module)}')">
-        ${photoHtml}${initialsHtml}
-        <div class="consultant-name" title="${escAttr(entry.name)}">${esc(entry.name)}</div>
-        ${entry.role ? `<div class="consultant-role" title="${escAttr(entry.role)}">${esc(entry.role)}</div>` : ''}
-      </div>
-    </td>`;
-  }
-  return `<td class="cell-data" style="height:${height}">
-    <div class="cell-empty" onclick="openAssign('${escAttr(client)}','${escAttr(module)}')">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><line x1="10" y1="6" x2="10" y2="14"/><line x1="6" y1="10" x2="14" y2="10"/></svg>
-    </div>
-  </td>`;
-}
-
 function renderStats() {
-  const total = clients.length * MODULES.length;
-  let filled = 0;
-  clients.forEach(c => { MODULES.forEach(m => { if ((data[c]||{})[m]?.name) filled++; }); });
+  const total = clients.length * modules.length;
+  let filled = 0; const uniq = new Set();
+  clients.forEach(c => modules.forEach(m => { const e=(data[c]||{})[m.name]; if(e?.name){filled++;uniq.add(e.name);} }));
   const pct = total > 0 ? Math.round(filled/total*100) : 0;
-  const uniqueConsultants = new Set();
-  clients.forEach(c => { MODULES.forEach(m => { const e = (data[c]||{})[m]; if (e?.name) uniqueConsultants.add(e.name); }); });
-
   document.getElementById('stats-bar').innerHTML = `
     <div class="stat-pill"><strong>${clients.length}</strong> clientes</div>
-    <div class="stat-pill"><strong>${MODULES.length}</strong> módulos</div>
-    <div class="stat-pill"><strong>${filled}</strong> / ${total} celdas asignadas</div>
+    <div class="stat-pill"><strong>${modules.length}</strong> módulos</div>
+    <div class="stat-pill"><strong>${filled}</strong> / ${total} asignadas</div>
     <div class="stat-pill"><strong>${pct}%</strong> completitud</div>
-    <div class="stat-pill"><strong>${uniqueConsultants.size}</strong> consultores únicos</div>
-  `;
+    <div class="stat-pill"><strong>${uniq.size}</strong> consultores únicos</div>`;
 }
 
-// ─── Assign modal ──────────────────────────────────────
-let currentPhotoBase64 = null;
-
-function openAssign(client, module) {
-  document.getElementById('modal-title').textContent = 'Asignar consultor';
-  document.getElementById('modal-sub').textContent = `${client} · ${module}`;
-  document.getElementById('modal-client').value = client;
-  document.getElementById('modal-module').value = module;
-  const entry = (data[client] || {})[module] || {};
-  document.getElementById('consultant-name').value = entry.name || '';
-  document.getElementById('consultant-role').value = entry.role || '';
-  document.getElementById('photo-url').value = (!entry.photo || entry.photo.startsWith('data:')) ? '' : (entry.photo || '');
-  currentPhotoBase64 = entry.photo && entry.photo.startsWith('data:') ? entry.photo : null;
+// ── Assign modal ────────────────────────────────────────
+function openAssign(client, modName) {
+  const entry = (data[client]||{})[modName] || {};
+  document.getElementById('modal-assign-title').textContent = entry.name ? 'Editar consultor' : 'Asignar consultor';
+  document.getElementById('modal-assign-sub').textContent   = `${client}  ·  ${modName}`;
+  document.getElementById('modal-client-val').value  = client;
+  document.getElementById('modal-module-val').value  = modName;
+  document.getElementById('consultant-name').value   = entry.name    || '';
+  document.getElementById('consultant-role').value   = entry.role    || '';
+  document.getElementById('consultant-comment').value= entry.comment || '';
+  document.getElementById('photo-url').value = (entry.photo && !entry.photo.startsWith('data:')) ? entry.photo : '';
+  currentPhotoBase64 = (entry.photo && entry.photo.startsWith('data:')) ? entry.photo : null;
   updateAvatarPreview();
   document.getElementById('modal-assign').classList.add('open');
   setTimeout(() => document.getElementById('consultant-name').focus(), 80);
 }
-function closeModal() { document.getElementById('modal-assign').classList.remove('open'); currentPhotoBase64 = null; }
+function closeAssignModal() { document.getElementById('modal-assign').classList.remove('open'); currentPhotoBase64 = null; }
 
 function handlePhotoUpload(input) {
   if (!input.files[0]) return;
@@ -436,55 +584,46 @@ function handlePhotoUpload(input) {
   reader.onload = e => {
     currentPhotoBase64 = e.target.result;
     document.getElementById('photo-url').value = '';
-    const prev = document.getElementById('avatar-preview');
-    prev.innerHTML = `<img src="${currentPhotoBase64}" style="width:48px;height:48px;border-radius:50%;object-fit:cover">`;
+    document.getElementById('avatar-preview').innerHTML = `<img src="${currentPhotoBase64}">`;
   };
   reader.readAsDataURL(input.files[0]);
 }
-
 function updateAvatarPreview() {
-  const url = document.getElementById('photo-url').value.trim();
+  const url  = document.getElementById('photo-url').value.trim();
   const name = document.getElementById('consultant-name').value.trim();
   const prev = document.getElementById('avatar-preview');
-  if (url) { prev.innerHTML = `<img src="${escAttr(url)}" style="width:48px;height:48px;border-radius:50%;object-fit:cover" onerror="this.parentElement.textContent='?'">`; currentPhotoBase64 = null; }
-  else if (currentPhotoBase64) { prev.innerHTML = `<img src="${currentPhotoBase64}" style="width:48px;height:48px;border-radius:50%;object-fit:cover">`; }
+  if (url) { prev.innerHTML = `<img src="${escAttr(url)}" onerror="this.parentElement.textContent='?'">`; currentPhotoBase64 = null; }
+  else if (currentPhotoBase64) { prev.innerHTML = `<img src="${currentPhotoBase64}">`; }
   else { prev.textContent = name ? getInitials(name) : '?'; }
 }
-function updateInitials() {
-  if (!document.getElementById('photo-url').value && !currentPhotoBase64) updateAvatarPreview();
-}
+function updateInitials() { if (!document.getElementById('photo-url').value && !currentPhotoBase64) updateAvatarPreview(); }
 
 function saveAssignment() {
-  const client = document.getElementById('modal-client').value;
-  const module = document.getElementById('modal-module').value;
-  const name = document.getElementById('consultant-name').value.trim();
-  const role = document.getElementById('consultant-role').value.trim();
-  const photoUrl = document.getElementById('photo-url').value.trim();
+  const client  = document.getElementById('modal-client-val').value;
+  const mod     = document.getElementById('modal-module-val').value;
+  const name    = document.getElementById('consultant-name').value.trim();
+  const role    = document.getElementById('consultant-role').value.trim();
+  const comment = document.getElementById('consultant-comment').value.trim();
+  const photoUrl= document.getElementById('photo-url').value.trim();
   if (!name) { document.getElementById('consultant-name').focus(); return; }
   if (!data[client]) data[client] = {};
-  data[client][module] = { name, role, photo: currentPhotoBase64 || photoUrl || '' };
-  saveState();
-  closeModal();
-  renderMatrix();
-  showToast('Consultor asignado correctamente');
+  data[client][mod] = { name, role, comment, photo: currentPhotoBase64 || photoUrl || '' };
+  saveState(); closeAssignModal(); renderMatrix();
+  showToast('Consultor guardado');
 }
-
-function removeAssignment(client, module, e) {
+function removeAssignment(client, mod, e) {
   e.stopPropagation();
-  if (!data[client]) return;
-  delete data[client][module];
-  saveState(); renderMatrix();
-  showToast('Asignación eliminada');
+  if (data[client]) delete data[client][mod];
+  saveState(); renderMatrix(); showToast('Asignación eliminada');
 }
 
-// ─── Client modal ──────────────────────────────────────
+// ── Client modal ────────────────────────────────────────
 function openAddClient() {
   document.getElementById('new-client-name').value = '';
-  document.getElementById('modal-client').classList.remove('open');
-  document.getElementById('modal-client-modal').classList.add('open');
+  document.getElementById('modal-add-client').classList.add('open');
   setTimeout(() => document.getElementById('new-client-name').focus(), 80);
 }
-function closeClientModal() { document.getElementById('modal-client-modal').classList.remove('open'); }
+function closeClientModal() { document.getElementById('modal-add-client').classList.remove('open'); }
 function saveClient() {
   const name = document.getElementById('new-client-name').value.trim();
   if (!name) { document.getElementById('new-client-name').focus(); return; }
@@ -495,142 +634,233 @@ function saveClient() {
   showToast(`Cliente "${name}" agregado`);
 }
 function removeClient(client) {
-  if (!confirm(`¿Eliminar el cliente "${client}" y todas sus asignaciones?`)) return;
-  clients = clients.filter(c => c !== client);
-  delete data[client];
-  saveState(); renderMatrix();
-  showToast(`Cliente eliminado`);
+  showConfirm(
+    'Eliminar cliente',
+    `¿Eliminar "${client}" y todas sus asignaciones?`,
+    () => {
+      clients = clients.filter(c => c !== client);
+      delete data[client];
+      saveState(); renderMatrix(); showToast('Cliente eliminado');
+    }
+  );
 }
 
-// Fix: rename modal id
-document.getElementById('modal-client').id = 'modal-client-modal';
-
-// ─── File upload ───────────────────────────────────────
-function toggleUpload() {
-  const sec = document.getElementById('upload-section');
-  sec.classList.toggle('visible');
+// ── Module manager ──────────────────────────────────────
+function openModuleManager() {
+  renderModuleList();
+  renderColorPicker('color-pick', selectedNewColor, c => { selectedNewColor = c; });
+  document.getElementById('modal-modules').classList.add('open');
+  setTimeout(() => document.getElementById('new-module-name').focus(), 80);
 }
+function closeModuleModal() {
+  document.getElementById('modal-modules').classList.remove('open');
+  refreshModuleFilter(); renderMatrix();
+}
+function renderModuleList() {
+  const list = document.getElementById('module-list');
+  list.innerHTML = '';
+  if (!modules.length) { list.innerHTML = '<div style="font-size:13px;color:var(--text3);text-align:center;padding:12px">Sin módulos</div>'; return; }
+  modules.forEach((m, i) => {
+    const row = document.createElement('div');
+    row.className = 'module-row';
+    row.innerHTML = `<div class="module-color-dot" style="background:${m.color}"></div>
+      <span class="module-row-name">${esc(m.name)}</span>
+      <div class="module-row-actions">
+        <button class="btn btn-sm" onclick="openEditModule(${i})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteModule(${i})">Eliminar</button>
+      </div>`;
+    list.appendChild(row);
+  });
+}
+function addModule() {
+  const name = document.getElementById('new-module-name').value.trim();
+  if (!name) { document.getElementById('new-module-name').focus(); return; }
+  if (modules.some(m => m.name === name)) { showToast('El módulo ya existe'); return; }
+  modules.push({ name, color: selectedNewColor });
+  document.getElementById('new-module-name').value = '';
+  saveState(); renderModuleList(); showToast(`Módulo "${name}" agregado`);
+}
+function deleteModule(idx) {
+  const m = modules[idx]; if (!m) return;
+  showConfirm('Eliminar módulo', `¿Eliminar "${m.name}"? Se perderán todas sus asignaciones.`, () => {
+    clients.forEach(c => { if (data[c]) delete data[c][m.name]; });
+    modules.splice(idx, 1);
+    saveState(); renderModuleList(); showToast('Módulo eliminado');
+  });
+}
+
+// Edit module
+function openEditModule(idx) {
+  const m = modules[idx]; if (!m) return;
+  document.getElementById('edit-module-idx').value  = idx;
+  document.getElementById('edit-module-name').value = m.name;
+  selectedEditColor = m.color;
+  renderColorPicker('edit-color-pick', selectedEditColor, c => { selectedEditColor = c; });
+  document.getElementById('modal-modules').classList.remove('open');
+  document.getElementById('modal-edit-module').classList.add('open');
+  setTimeout(() => document.getElementById('edit-module-name').focus(), 80);
+}
+function closeEditModuleModal() {
+  document.getElementById('modal-edit-module').classList.remove('open');
+  document.getElementById('modal-modules').classList.add('open');
+  renderModuleList();
+}
+function saveEditModule() {
+  const idx     = parseInt(document.getElementById('edit-module-idx').value);
+  const oldName = modules[idx].name;
+  const newName = document.getElementById('edit-module-name').value.trim();
+  if (!newName) { document.getElementById('edit-module-name').focus(); return; }
+  if (newName !== oldName) {
+    clients.forEach(c => {
+      if (data[c] && data[c][oldName] !== undefined) {
+        data[c][newName] = data[c][oldName];
+        delete data[c][oldName];
+      }
+    });
+  }
+  modules[idx] = { name: newName, color: selectedEditColor };
+  saveState(); closeEditModuleModal(); showToast('Módulo actualizado');
+}
+
+function renderColorPicker(containerId, current, onSelect) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  PALETTE.forEach(color => {
+    const sw = document.createElement('div');
+    sw.className = 'color-swatch' + (color === current ? ' selected' : '');
+    sw.style.background = color;
+    sw.title = color;
+    sw.onclick = () => {
+      el.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+      sw.classList.add('selected');
+      onSelect(color);
+    };
+    el.appendChild(sw);
+  });
+}
+
+// ── File upload ─────────────────────────────────────────
+function toggleUpload() { document.getElementById('upload-section').classList.toggle('visible'); }
 
 function handleFileUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const name = file.name.toLowerCase();
-  if (name.endsWith('.csv')) {
-    const reader = new FileReader();
-    reader.onload = e => parseCSV(e.target.result);
-    reader.readAsText(file, 'UTF-8');
-  } else if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const wb = XLSX.read(e.target.result, { type: 'array' });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      const csvLines = rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
-      parseCSV(csvLines);
+  const file = input.files[0]; if (!file) return;
+  if (file.name.toLowerCase().endsWith('.csv')) {
+    const r = new FileReader();
+    r.onload = e => parseCSV(e.target.result);
+    r.readAsText(file, 'UTF-8');
+  } else {
+    const r = new FileReader();
+    r.onload = e => {
+      const wb  = XLSX.read(e.target.result, {type:'array'});
+      const ws  = wb.Sheets[wb.SheetNames[0]];
+      const rows= XLSX.utils.sheet_to_json(ws, {header:1});
+      parseCSV(rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n'));
     };
-    reader.readAsArrayBuffer(file);
+    r.readAsArrayBuffer(file);
   }
   input.value = '';
 }
 
 function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/);
-  if (lines.length < 2) { showToast('Archivo vacío o sin datos'); return; }
-  const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g,'').trim().toLowerCase());
-  const iCliente = headers.findIndex(h => h.includes('client'));
-  const iModulo = headers.findIndex(h => h.includes('modul') || h.includes('módulo'));
-  const iConsultor = headers.findIndex(h => h.includes('consul'));
-  const iRol = headers.findIndex(h => h.includes('rol') || h.includes('role'));
-  const iFoto = headers.findIndex(h => h.includes('foto') || h.includes('photo') || h.includes('url'));
-
-  if (iCliente < 0 || iModulo < 0 || iConsultor < 0) {
-    showToast('Error: columnas requeridas: cliente, modulo, consultor'); return;
-  }
-
+  const lines = text.trim().split(/\r?\n/); if (lines.length < 2) { showToast('Archivo vacío'); return; }
+  const H = lines[0].split(',').map(h => h.replace(/^"|"$/g,'').trim().toLowerCase());
+  const iC=H.findIndex(h=>h.includes('client')), iM=H.findIndex(h=>h.includes('modul')||h.includes('módulo'));
+  const iCo=H.findIndex(h=>h.includes('consul')), iR=H.findIndex(h=>h.includes('rol')||h.includes('role'));
+  const iF=H.findIndex(h=>h.includes('foto')||h.includes('photo')||h.includes('url'));
+  const iCm=H.findIndex(h=>h.includes('coment')||h.includes('comment')||h.includes('nota'));
+  if (iC<0||iM<0||iCo<0) { showToast('Faltan columnas: cliente, modulo, consultor'); return; }
   let added = 0;
-  for (let i = 1; i < lines.length; i++) {
-    const cols = splitCSVLine(lines[i]);
-    const cliente = (cols[iCliente]||'').trim();
-    const modulo = (cols[iModulo]||'').trim();
-    const consultor = (cols[iConsultor]||'').trim();
-    const rol = iRol >= 0 ? (cols[iRol]||'').trim() : '';
-    const foto = iFoto >= 0 ? (cols[iFoto]||'').trim() : '';
-    if (!cliente || !modulo || !consultor) continue;
-
-    const matchedModule = MODULES.find(m => m.toLowerCase().includes(modulo.toLowerCase().substring(0,4)) || modulo.toLowerCase().includes(m.toLowerCase().substring(0,4)));
-    if (!matchedModule) continue;
+  for (let i=1;i<lines.length;i++) {
+    const cols=splitCSVLine(lines[i]);
+    const cliente=(cols[iC]||'').trim(), modulo=(cols[iM]||'').trim(), consultor=(cols[iCo]||'').trim();
+    const rol=iR>=0?(cols[iR]||'').trim():'', foto=iF>=0?(cols[iF]||'').trim():'', comment=iCm>=0?(cols[iCm]||'').trim():'';
+    if (!cliente||!modulo||!consultor) continue;
+    let matched = modules.find(m=>m.name.toLowerCase()===modulo.toLowerCase());
+    if (!matched) matched = modules.find(m=>m.name.toLowerCase().includes(modulo.toLowerCase().substring(0,4))||modulo.toLowerCase().includes(m.name.toLowerCase().substring(0,4)));
+    if (!matched) { modules.push({name:modulo,color:PALETTE[modules.length%PALETTE.length]}); matched=modules[modules.length-1]; }
     if (!clients.includes(cliente)) clients.push(cliente);
-    if (!data[cliente]) data[cliente] = {};
-    data[cliente][matchedModule] = { name: consultor, role: rol, photo: foto };
+    if (!data[cliente]) data[cliente]={};
+    data[cliente][matched.name]={name:consultor,role:rol,photo:foto,comment};
     added++;
   }
-
-  saveState(); renderMatrix();
+  saveState(); refreshModuleFilter(); renderMatrix();
   showToast(`${added} asignaciones importadas`);
   document.getElementById('upload-section').classList.remove('visible');
 }
 
 function splitCSVLine(line) {
-  const result = []; let cur = ''; let inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === '"') { inQ = !inQ; }
-    else if (line[i] === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
-    else { cur += line[i]; }
+  const res=[]; let cur=''; let inQ=false;
+  for (let i=0;i<line.length;i++) {
+    if (line[i]==='"') inQ=!inQ;
+    else if (line[i]===','&&!inQ) { res.push(cur.trim()); cur=''; }
+    else cur+=line[i];
   }
-  result.push(cur.trim());
-  return result.map(c => c.replace(/^"|"$/g,''));
+  res.push(cur.trim());
+  return res.map(c=>c.replace(/^"|"$/g,''));
 }
 
 function downloadTemplate() {
-  const rows = [
-    ['cliente','modulo','consultor','rol','foto_url'],
-    ['Empresa ABC','EC (Employee Central)','Ana Martínez','Senior Consultant',''],
-    ['Empresa ABC','Recruiting (RCM/RMK)','Luis Torres','Lead Consultant',''],
-    ['Empresa XYZ','Performance & Goals','María López','Functional Consultant','https://ejemplo.com/foto.jpg'],
-    ['Empresa XYZ','Learning (LMS)','Carlos Ruiz','Senior Consultant',''],
+  const rows=[['cliente','modulo','consultor','rol','foto_url','comentario'],
+    ['Empresa ABC','EC (Employee Central)','Ana Martínez','Senior Consultant','','Responsable fase 1'],
+    ['Empresa ABC','Recruiting (RCM/RMK)','Luis Torres','Lead Consultant','',''],
+    ['Empresa XYZ','Performance & Goals','María López','Functional Consultant','https://ejemplo.com/foto.jpg','En curso Q2'],
+    ['Empresa XYZ','Learning (LMS)','Carlos Ruiz','Senior Consultant','',''],
   ];
-  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
-  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'plantilla_matriz_sf.csv'; a.click();
+  const csv=rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})); a.download='plantilla_matriz_c9.csv'; a.click();
 }
-
 function exportCSV() {
-  if (clients.length === 0) { showToast('No hay datos para exportar'); return; }
-  const rows = [['cliente','modulo','consultor','rol','foto_url']];
-  clients.forEach(c => {
-    MODULES.forEach(m => {
-      const e = (data[c]||{})[m];
-      if (e?.name) rows.push([c, m, e.name, e.role||'', e.photo && !e.photo.startsWith('data:') ? e.photo : '']);
-    });
-  });
-  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'matriz_consultores_sf.csv'; a.click();
+  if (!clients.length) { showToast('No hay datos'); return; }
+  const rows=[['cliente','modulo','consultor','rol','foto_url','comentario']];
+  clients.forEach(c=>modules.forEach(m=>{const e=(data[c]||{})[m.name]; if(e?.name) rows.push([c,m.name,e.name,e.role||'',e.photo&&!e.photo.startsWith('data:')?e.photo:'',e.comment||'']);}));
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'})); a.download='matriz_c9.csv'; a.click();
   showToast('CSV exportado');
 }
 
-// ─── Helpers ───────────────────────────────────────────
-function getInitials(name) {
-  return name.split(' ').filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('');
+// ── Custom confirm dialog ────────────────────────────────
+let _confirmCallback = null;
+function showConfirm(title, msg, onOk) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent   = msg;
+  _confirmCallback = onOk;
+  document.getElementById('confirm-overlay').classList.add('open');
 }
-function esc(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function escAttr(str) { return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('open'); _confirmCallback = null; }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
+// ── Custom confirm (replaces native confirm() blocked in iframes) ────────────
+let _confirmResolve = null;
+function showConfirm(title, msg, onOk) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent   = msg;
+  _confirmResolve = onOk;
+  document.getElementById('modal-confirm').classList.add('open');
+}
+function resolveConfirm(ok) {
+  document.getElementById('modal-confirm').classList.remove('open');
+  if (ok && _confirmResolve) _confirmResolve();
+  _confirmResolve = null;
 }
 
-// Close modals on backdrop click
-document.getElementById('modal-assign').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-document.getElementById('modal-client-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeClientModal(); });
+// ── Helpers ─────────────────────────────────────────────
+function getInitials(n){return n.split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-// Enter key on inputs
-document.getElementById('consultant-name').addEventListener('keydown', e => { if (e.key === 'Enter') saveAssignment(); });
-document.getElementById('new-client-name').addEventListener('keydown', e => { if (e.key === 'Enter') saveClient(); });
+// ── Event listeners ─────────────────────────────────────
+document.getElementById('modal-assign').addEventListener('click',e=>{if(e.target===e.currentTarget)closeAssignModal();});
+document.getElementById('modal-add-client').addEventListener('click',e=>{if(e.target===e.currentTarget)closeClientModal();});
+document.getElementById('modal-modules').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModuleModal();});
+document.getElementById('modal-edit-module').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEditModuleModal();});
+document.getElementById('modal-confirm').addEventListener('click',e=>{if(e.target===e.currentTarget)resolveConfirm(false);});
+document.getElementById('confirm-ok-btn').addEventListener('click',()=>{ const cb=_confirmCallback; closeConfirm(); if(cb) cb(); });
+document.getElementById('confirm-cancel-btn').addEventListener('click', closeConfirm);
+document.getElementById('confirm-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeConfirm();});
+document.getElementById('consultant-name').addEventListener('keydown',e=>{if(e.key==='Enter')saveAssignment();});
+document.getElementById('new-client-name').addEventListener('keydown',e=>{if(e.key==='Enter')saveClient();});
+document.getElementById('new-module-name').addEventListener('keydown',e=>{if(e.key==='Enter')addModule();});
+document.getElementById('edit-module-name').addEventListener('keydown',e=>{if(e.key==='Enter')saveEditModule();});
 </script>
 </body>
 </html>
